@@ -5,16 +5,15 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.view.SurfaceControl;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.item.R;
 import com.example.item.base.BaseActivity;
-import com.example.item.bean.login.CarBean;
 import com.example.item.bean.login.LoginBean;
 import com.example.item.interfaces.Net.ILoging;
 import com.example.item.presenter.LoginPresenter;
@@ -25,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends BaseActivity<ILoging.Presenter> implements ILoging.View {
+public class LoginActivity extends BaseActivity<ILoging.Presenter> implements ILoging.View, View.OnClickListener {
 
     @BindView(R.id.input_username)
     EditText inputUsername;
@@ -39,6 +38,7 @@ public class LoginActivity extends BaseActivity<ILoging.Presenter> implements IL
     Button btnLogin;
     private String username;
     private String pw;
+    private TextView mRegister;
 
 
     @Override
@@ -54,6 +54,8 @@ public class LoginActivity extends BaseActivity<ILoging.Presenter> implements IL
     @Override
     protected void initView() {
         imgPw.setTag(1);
+        mRegister = (TextView) findViewById(R.id.register);
+        mRegister.setOnClickListener(this);
     }
 
     @Override
@@ -84,11 +86,11 @@ public class LoginActivity extends BaseActivity<ILoging.Presenter> implements IL
         switch (view.getId()) {
             case R.id.img_pw:
                 int tag = (int) imgPw.getTag();
-                if(tag == 1){
+                if (tag == 1) {
                     imgPw.setImageResource(R.mipmap.ic_pw_open);
                     imgPw.setTag(2);
                     inputPw.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                }else{
+                } else {
                     imgPw.setImageResource(R.mipmap.ic_pw_close);
                     imgPw.setTag(1);
                     inputPw.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -107,6 +109,18 @@ public class LoginActivity extends BaseActivity<ILoging.Presenter> implements IL
             presenter.login(username, pw);
         } else {
             ToastUtils.s(this, getString(R.string.tips_login));
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.register:
+                Intent intent = new Intent(this, RegisterActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
         }
     }
 }

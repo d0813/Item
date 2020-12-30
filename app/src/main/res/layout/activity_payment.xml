@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.shopping.PaymentActivity">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/scrollView_order_form">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/img"
+                android:background="@drawable/tiao"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cons"
+                app:layout_constraintTop_toBottomOf="@id/img"
+                android:layout_marginTop="@dimen/dp_20">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="小账"
+                    android:id="@+id/username"
+                    android:textSize="@dimen/dp_20"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginLeft="@dimen/dp_40"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/username"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/m"
+                    android:layout_marginLeft="@dimen/dp_45"
+                    android:text="默认"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/username"
+                    android:text="111111111111"
+                    android:textSize="@dimen/dp_20"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:id="@+id/tel"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内蒙古自治区qqqqqqqqq"
+                    app:layout_constraintTop_toBottomOf="@id/tel"
+                    app:layout_constraintLeft_toRightOf="@id/m"
+                    android:layout_marginLeft="@dimen/dp_30"
+                    android:id="@+id/site"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginRight="@dimen/dp_10"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:background="@mipmap/ic_arrow_rt" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                app:layout_constraintTop_toBottomOf="@id/c"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_8"
+                android:layout_marginVertical="@dimen/dp_10"
+                android:background="@color/gray_word" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/c"
+                android:paddingVertical="@dimen/dp_10">
+
+                <TextView
+                    style="@style/Home_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_30"
+                    android:text="请选择优惠券" />
+
+                <TextView
+                    android:id="@+id/tv_order_form_coupon"
+                    style="@style/Home_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:layout_toLeftOf="@+id/iv_order_form_z"
+                    android:text="19张" />
+
+                <ImageView
+                    android:id="@+id/iv_order_form_z"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:background="@mipmap/ic_arrow_rt" />
+            </RelativeLayout>
+            <View
+                app:layout_constraintTop_toBottomOf="@id/c"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_8"
+                android:layout_marginVertical="@dimen/dp_10"
+                android:background="@color/gray_word" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingVertical="@dimen/dp_10">
+                <TextView
+                    android:id="@+id/tv_totalname"
+                    style="@style/Home_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_30"
+                    android:text="商品合计" />
+
+                <TextView
+                    android:id="@+id/tv_total"
+                    style="@style/Home_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:text="46" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingVertical="@dimen/dp_10">
+                <TextView
+                    android:id="@+id/tv_moneyname"
+                    style="@style/Home_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_30"
+                    android:text="运费" />
+
+                <TextView
+                    android:id="@+id/tv_money"
+                    style="@style/Home_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:text="46" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingVertical="@dimen/dp_10">
+                <TextView
+                    android:id="@+id/tv_salename"
+                    style="@style/Home_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_30"
+                    android:text="商品合计" />
+
+                <TextView
+                    android:id="@+id/tv_sale"
+                    style="@style/Home_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:text="46" />
+            </RelativeLayout>
+            <View
+                app:layout_constraintTop_toBottomOf="@id/c"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_8"
+                android:layout_marginVertical="@dimen/dp_10"
+                android:background="@color/gray_word" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler_total"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_order_form"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView_order_form">
+
+        <TextView
+            android:id="@+id/tv_order_form_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:text="实付：￥"
+            android:textSize="@dimen/sp_20"
+            android:textColor="#772721"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_moneys"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <TextView
+            android:id="@+id/tv_moneys"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:text="5767"
+            android:textSize="@dimen/sp_20"
+            android:textColor="#772721"
+            app:layout_constraintLeft_toRightOf="@id/tv_order_form_payment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <TextView
+            android:id="@+id/tv_order_form_add"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="match_parent"
+            android:background="@color/red"
+            android:gravity="center"
+            android:text="去付款"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

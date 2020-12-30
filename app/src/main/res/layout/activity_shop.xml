@@ -78,8 +78,10 @@
                 android:background="#ECE9E9"/>
             <!--商品评论区域-->
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mCl_category_assess"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
                 <TextView
                     android:id="@+id/txt_assess"
                     android:layout_width="wrap_content"

@@ -18,7 +18,9 @@ public abstract class BasePresenter<V extends IBaseView> implements IBasePresent
 
     @Override
     public void unAttachView() {
-        weakReference.clear();
+        if(weakReference!=null){
+            weakReference.clear();
+        }
         mView=null;
 
     }

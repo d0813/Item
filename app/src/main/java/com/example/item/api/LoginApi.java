@@ -1,7 +1,9 @@
 package com.example.item.api;
 
 import com.example.item.bean.DeleteCarBean;
+import com.example.item.bean.RegisterBean;
 import com.example.item.bean.UpdateCarBean;
+import com.example.item.bean.UserInfoBean;
 import com.example.item.bean.login.AddCarBean;
 import com.example.item.bean.login.CarBean;
 import com.example.item.bean.login.LoginBean;
@@ -48,6 +50,15 @@ public interface LoginApi {
     //购物车列表
     @GET("api/cart/index")
     Flowable<CarBean> getCarList();
+
+    //注册接口
+    @POST("api/auth/register")
+    @FormUrlEncoded
+    Flowable<RegisterBean> register(@FieldMap HashMap<String,String> map);
+
+    //用户信息更新
+    @POST("api/user/updateUserInfo")
+    Flowable<UserInfoBean> updateUserInfo(@FieldMap Map<String,String> map);
 
 }
 

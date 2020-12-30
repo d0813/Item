@@ -6,4 +6,10 @@
     <color name="red">#FF0000</color>
     <color name="purple_200">#9C27B0</color>
     <color name="gray_word">#DFDFDF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="Jiured">#AB2B2B</color>
+    <color name="black">#000000</color>
+    <color name="gray">#ECE9E9</color>
+    <color name="gray_Text">#8A8686</color>
+    <color name="carText">#B5000000</color>
 </resources>

@@ -3,6 +3,7 @@ package com.example.item.ui.home.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,6 +34,9 @@ import com.example.item.presenter.ShopPresenter;
 import com.example.item.ui.home.bigvideo.BigImageActivity;
 import com.example.item.ui.home.bigvideo.CategoryBigImageAdapter;
 import com.example.item.ui.login.LoginActivity;
+import com.example.item.ui.me.click.LikeBean;
+import com.example.item.ui.me.click.Realms;
+import com.example.item.utils.SpUtils;
 import com.luck.picture.lib.tools.ToastUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -47,6 +51,7 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.View {
 
@@ -57,8 +62,6 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
 
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
-    @BindView(R.id.img_collect)
-    ImageView imgCollect;
     @BindView(R.id.layout_collect)
     FrameLayout layoutCollect;
     @BindView(R.id.img_car)
@@ -97,6 +100,8 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
     RecyclerView recyclerH5;
     ShopBean.DataBeanX.InfoBean info;
     ShopBean shopBean;
+    @BindView(R.id.img_collect)
+    ImageView imgCollect;
 
     private String h5 = "<html>\n" +
             "            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\"/>\n" +
@@ -151,7 +156,7 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
 
     @Override
     public void getShopReturn(ShopBean shopBean) {
-        this.shopBean=shopBean;
+        this.shopBean = shopBean;
         banners(shopBean.getData().getGallery());
         //h5
         detail(shopBean.getData().getInfo().getGoods_desc());
@@ -159,7 +164,7 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
         attribute(shopBean.getData().getAttribute());
         heandname(shopBean.getData().getInfo());
         //评论
-        //  initComment(shopBean.getData().getComment().getData());
+         initComment(shopBean.getData().getComment().getData());
 
         //展示h5
         //showImage(shopBean.getData().getInfo().getGoods_desc());
@@ -167,25 +172,7 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
     }
 
     private void initComment(ShopBean.DataBeanX.CommentBean.DataBean data) {
-//        if (data != null) {
-//            mCl_assess.setVisibility(View.VISIBLE);//进行显示评论
-//            mCl_comment.setVisibility(View.VISIBLE);//显示商品文字
-//
-//            //时间
-//            tv_head_date.setText(data.getAdd_time());
-//            //名字
-//            tv_head_name.setText(data.getNickname());
-//            //评论内容
-//            tv_head_desc.setText(data.getContent());
-//            //底部图片
-//            if (data.getPic_list() != null && data.getPic_list().size() > 0) {
-//                ImageLoaderUtils.loadImage(data.getPic_list().get(0).getPic_url(), iv_img);
-//            } else {
-//                mCl_comment.setVisibility(View.GONE);//隐藏下面的图片
-//            }
-//        } else {
-//            Log.i("TAG", "该详情没有评论");
-//        }
+
     }
 
     private void detail(String goods_desc) {
@@ -298,7 +285,7 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
     }
 
 
-    @OnClick({R.id.img_car, R.id.txt_buy,R.id.txt_addCar})
+    @OnClick({R.id.img_car, R.id.txt_buy, R.id.txt_addCar,R.id.img_collect})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_car:
@@ -308,7 +295,7 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
             case R.id.txt_buy:
                 txtBuy.setTag(1);
                 int tag = (int) txtBuy.getTag();
-                if(tag==1){
+                if (tag == 1) {
                     pops();
                     txtBuy.setTag(2);
                 }
@@ -326,14 +313,38 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
 
                 break;
             case R.id.txt_addCar:
-
+                break;
+            case R.id.img_collect:
+                like();
                 break;
         }
     }
 
+    private void like() {
+        String token = SpUtils.getInstance().getString("token");
+        if(!TextUtils.isEmpty(token)){
+            Realms.getRealm(ShopActivity.this).executeTransaction(new Realm.Transaction(){
+
+                @Override
+                public void execute(Realm realm) {
+                    LikeBean likeBean = realm.createObject(LikeBean.class);
+                    likeBean.setDesc(info.getName());
+                    likeBean.setImgPath(info.getList_pic_url());
+                    likeBean.setPrice(info.getRetail_price()+"");
+                    likeBean.setTitle(info.getGoods_brief());
+                    Log.i("TAG", "execute: "+info.getName());
+                    Toast.makeText(ShopActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+
+    }
+
     int buyNumber = 0;//购买数量默认1
 
-    public void pops(){
+    public void pops() {
         if (info != null) {
             View join_view = LayoutInflater.from(this).inflate(R.layout.join_item, null);
             popupWindow = new PopupWindow(join_view, GridLayout.LayoutParams.MATCH_PARENT, GridLayout.LayoutParams.WRAP_CONTENT);
@@ -385,7 +396,7 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
     }
 
     public void addCar() {
-        if (buyNumber <=0) {
+        if (buyNumber <= 0) {
             ToastUtils.s(this, getString(R.string.tips_buynumber));
             return;
         }
@@ -399,6 +410,7 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
             presenter.addGoodCar(map);
         }
     }
+
 
 
 }
