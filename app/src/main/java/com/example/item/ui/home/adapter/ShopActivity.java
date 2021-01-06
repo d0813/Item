@@ -103,6 +103,27 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
     @BindView(R.id.img_collect)
     ImageView imgCollect;
 
+    @BindView(R.id.mCl_category_assess)
+    ConstraintLayout mCl_assess;
+    @BindView(R.id.mV_category_assess)
+    View mVCategoryAssess;
+    @BindView(R.id.iv_category_info_comment_head_img)
+    ImageView iv_head_img;
+    @BindView(R.id.tv_category_info_comment_head_name)
+    TextView tv_head_name;
+    @BindView(R.id.tv_category_info_comment_head_date)
+    TextView tv_head_date;
+    @BindView(R.id.tv_category_info_comment_head_desc)
+    TextView tv_head_desc;
+    @BindView(R.id.iv_category_info_comment_img)
+    ImageView iv_img;
+    @BindView(R.id.mCl_category_comment)
+    ConstraintLayout mClCategoryComment;
+    @BindView(R.id.mV_category_comment)
+    View mVCategoryComment;
+
+
+
     private String h5 = "<html>\n" +
             "            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\"/>\n" +
             "            <head>\n" +
@@ -164,7 +185,7 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
         attribute(shopBean.getData().getAttribute());
         heandname(shopBean.getData().getInfo());
         //评论
-         initComment(shopBean.getData().getComment().getData());
+        initComment(shopBean.getData().getComment().getData());
 
         //展示h5
         //showImage(shopBean.getData().getInfo().getGoods_desc());
@@ -172,7 +193,27 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
     }
 
     private void initComment(ShopBean.DataBeanX.CommentBean.DataBean data) {
+        if (data != null) {
+            mCl_assess.setVisibility(View.VISIBLE);
+            mClCategoryComment.setVisibility(View.VISIBLE);
+            mVCategoryAssess.setVisibility(View.VISIBLE);
+            mVCategoryComment.setVisibility(View.VISIBLE);
+            tv_head_date.setText(data.getAdd_time());
+            tv_head_name.setText(data.getNickname());
+            tv_head_desc.setText(data.getContent());
 
+            if (data.getPic_list() != null && data.getPic_list().size() > 0) {
+                Glide.with(this).load(data.getPic_list().get(0).getPic_url()).into(iv_img);
+            } else {
+                mCl_assess.setVisibility(View.GONE);
+                mClCategoryComment.setVisibility(View.GONE);
+                mVCategoryAssess.setVisibility(View.GONE);
+                mVCategoryComment.setVisibility(View.GONE);
+
+            }
+        } else {
+            Log.i("TAG", "initComment: " + "该详情没有评论");
+        }
     }
 
     private void detail(String goods_desc) {
@@ -285,7 +326,7 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
     }
 
 
-    @OnClick({R.id.img_car, R.id.txt_buy, R.id.txt_addCar,R.id.img_collect})
+    @OnClick({R.id.img_car, R.id.txt_buy, R.id.txt_addCar, R.id.img_collect})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_car:
@@ -322,21 +363,21 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
 
     private void like() {
         String token = SpUtils.getInstance().getString("token");
-        if(!TextUtils.isEmpty(token)){
-            Realms.getRealm(ShopActivity.this).executeTransaction(new Realm.Transaction(){
+        if (!TextUtils.isEmpty(token)) {
+            Realms.getRealm(ShopActivity.this).executeTransaction(new Realm.Transaction() {
 
                 @Override
                 public void execute(Realm realm) {
                     LikeBean likeBean = realm.createObject(LikeBean.class);
                     likeBean.setDesc(info.getName());
                     likeBean.setImgPath(info.getList_pic_url());
-                    likeBean.setPrice(info.getRetail_price()+"");
+                    likeBean.setPrice(info.getRetail_price() + "");
                     likeBean.setTitle(info.getGoods_brief());
-                    Log.i("TAG", "execute: "+info.getName());
+                    Log.i("TAG", "execute: " + info.getName());
                     Toast.makeText(ShopActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
                 }
             });
-        }else{
+        } else {
             startActivity(new Intent(this, LoginActivity.class));
         }
 
@@ -412,5 +453,8 @@ public class ShopActivity extends BaseActivity<ShopPresenter> implements IShop.V
     }
 
 
-
+    @OnClick(R.id.img_collect)
+    public void onViewClicked() {
+        imgCollect.setImageResource(R.mipmap.f2);
+    }
 }

@@ -15,12 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.shopping.Address_AddActivity"/>
+
+        <activity android:name=".ui.dashboard.SpecialCommentActivity" />
+        <activity android:name=".ui.dashboard.comment.DiscussActivity" />
+        <activity android:name=".ui.dashboard.SpecialDetailsActivity" />
+        <activity android:name=".ui.shopping.Address_AddActivity" />
         <activity android:name=".ui.me.PresonActivity" />
         <activity android:name=".ui.login.RegisterActivity" />
-        <activity android:name=".WelcomeActivity">
-
-        </activity>
+        <activity android:name=".WelcomeActivity" />
         <activity android:name=".ui.shopping.PaymentActivity" />
         <activity android:name=".ui.me.click.LikeActivity" />
         <activity android:name=".ui.login.LoginActivity" />
@@ -31,7 +33,7 @@
         <activity android:name=".ui.home.activity.HomeNewActivity" />
         <activity android:name=".ui.home.activity.HomeDirectActivity" />
         <activity android:name=".ui.home.DetailActivity" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -35,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.item.R;
 import com.example.item.app.Constants;
+import com.example.item.app.MyApp;
 import com.example.item.base.BaseActivity;
 import com.example.item.bean.UserInfoBean;
 import com.example.item.interfaces.Net.INetease;
@@ -123,16 +124,39 @@ public class PresonActivity extends BaseActivity<IPro.Presenter> implements IPro
         SpUtils.getInstance().setValue("name",strname);
         TextView sub_imgname_right = include_pro_tel.findViewById(R.id.tv_pre_sub_right);
         sub_imgname_right.setText("12345679");
-
+        //点击名字弹出
         ImageView sub_right_img = include_pro_name.findViewById(R.id.tv_pre_sub_img);
+        //登录保存的用户名
+        String name = SpUtils.getInstance().getString("name");
 
-        sub_right_img.setOnClickListener(new View.OnClickListener() {
+        String txtName = (String) MyApp.getMap().get("txtName");
+
+        sub_nikename_right.setText(txtName);
+        sub_nikename_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //打开输入状态
                 showInput();
+                btnSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String nikename = txtInput.getText().toString();
+                        if(!TextUtils.isEmpty(nikename)){
+                            HashMap<String, String> map = new HashMap<>();
+                            map.put("nickname", nikename);
+                            presenter.Preson(map);
+                            layoutInput.setVisibility(View.GONE);
+                            SpUtils.getInstance().remove("nickname");
+                            SpUtils.getInstance().setValue("nickname", nikename);
+                            sub_name_right.setText(nikename);
+                            txtInput.setText("");
+                        }
+                    }
+                });
             }
         });
+
+
         String img = SpUtils.getInstance().getString("img");
         if (!TextUtils.isEmpty(img)) {
             Glide.with(this).load(img).apply(new RequestOptions().circleCrop()).into(ivImgHead);
@@ -152,7 +176,7 @@ public class PresonActivity extends BaseActivity<IPro.Presenter> implements IPro
         ossClient = new OSSClient(getApplicationContext(), ossPoint, credentialProvider);
 
     }
-
+    //TODO 获取输入框
     private void showInput() {
         //显示布局
         layoutInput.setVisibility(View.VISIBLE);
@@ -189,10 +213,10 @@ public class PresonActivity extends BaseActivity<IPro.Presenter> implements IPro
                 openPhotos();
                 break;
             case R.id.btn_save:
-                String nickname = txtInput.getText().toString();
-                if (!TextUtils.isEmpty(nickname)) {
+                String nname = txtInput.getText().toString();
+                if (!TextUtils.isEmpty(nname)) {
                     HashMap<String, String> map = new HashMap<>();
-                    map.put("nickname", nickname);
+                    map.put("nickname", nname);
                     presenter.Preson(map);
                 }
                 break;

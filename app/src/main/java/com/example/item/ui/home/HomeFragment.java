@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
+
 import com.example.item.R;
 import com.example.item.base.BaseAdapter;
 import com.example.item.base.BaseFragment;
@@ -37,6 +38,7 @@ import com.example.item.ui.home.activity.SubHomeDirectActivity;
 import com.example.item.ui.home.adapter.ShopActivity;
 import com.example.item.ui.shopping.ShoppingFragment;
 import com.example.item.utils.ItemDecoration;
+import com.live.RoomActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -300,17 +302,16 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button:
-                break;
-            default:
-                break;
-        }
+
     }
 
-    @OnClick({R.id.home_direct_supply, R.id.home_new_arrival, R.id.home_hot, R.id.home_choiceness})
+    @OnClick({R.id.button,R.id.home_direct_supply, R.id.home_new_arrival, R.id.home_hot, R.id.home_choiceness})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.button:
+                Intent intent66 = new Intent(getActivity(), RoomActivity.class);
+                startActivity(intent66);
+                break;
             case R.id.home_direct_supply:
                 Intent intent = new Intent(getActivity(), HomeDirectActivity.class);
                 startActivity(intent);

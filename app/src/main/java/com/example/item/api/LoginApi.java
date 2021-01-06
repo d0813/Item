@@ -1,6 +1,8 @@
 package com.example.item.api;
 
+import com.example.item.bean.AppBean;
 import com.example.item.bean.DeleteCarBean;
+import com.example.item.bean.LogoutBean;
 import com.example.item.bean.RegisterBean;
 import com.example.item.bean.UpdateCarBean;
 import com.example.item.bean.UserInfoBean;
@@ -57,8 +59,21 @@ public interface LoginApi {
     Flowable<RegisterBean> register(@FieldMap HashMap<String,String> map);
 
     //用户信息更新
+
     @POST("api/user/updateUserInfo")
+    @FormUrlEncoded
     Flowable<UserInfoBean> updateUserInfo(@FieldMap Map<String,String> map);
+
+    //版本更新
+    @GET("api/apk/appinfo")
+    Flowable<AppBean> getAppInfo();
+
+
+    //退出登录
+    @POST("api/auth/logout")
+    Flowable<LogoutBean> postlogout();
+
+
 
 }
 

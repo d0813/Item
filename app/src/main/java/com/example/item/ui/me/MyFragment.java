@@ -8,22 +8,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.item.R;
 import com.example.item.base.BaseFragment;
+import com.example.item.bean.LogoutBean;
 import com.example.item.interfaces.IBasePresenter;
+import com.example.item.interfaces.Net.ILoging;
+import com.example.item.interfaces.Net.ILogout;
+import com.example.item.presenter.Logoutpresenter;
 import com.example.item.ui.login.LoginActivity;
 import com.example.item.ui.me.click.LikeActivity;
+import com.example.item.utils.ActivityCollectorUtil;
 import com.example.item.utils.SpUtils;
+import com.luck.picture.lib.tools.SPUtils;
 import com.luck.picture.lib.tools.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MyFragment extends BaseFragment {
+public class MyFragment extends BaseFragment<ILogout.Presenter> implements ILogout.View {
 
 
     @BindView(R.id.retures)
@@ -59,6 +63,8 @@ public class MyFragment extends BaseFragment {
 
     public static final int LOGIN_ME = 10001; //登录成功的回传值
     public static final int LOGINOUT_ME = 10002;
+
+
     @BindView(R.id.log_out)
     Button logOut;
 
@@ -68,9 +74,10 @@ public class MyFragment extends BaseFragment {
     }
 
     @Override
-    protected IBasePresenter createPrenter() {
-        return null;
+    protected ILogout.Presenter createPrenter() {
+        return new Logoutpresenter(this);
     }
+
 
     @Override
     protected void initView() {
@@ -100,26 +107,20 @@ public class MyFragment extends BaseFragment {
             }
 
             String img = SpUtils.getInstance().getString("img");
-            if (!TextUtils.isEmpty(img)) {
+            String nickname = SpUtils.getInstance().getString("nickname");
+            if (!TextUtils.isEmpty(img) && !TextUtils.isEmpty(nickname)) {
+                username.setText(nickname);
                 Glide.with(this).load(img).apply(new RequestOptions().circleCrop()).into(userhead);
             }
         }
     }
 
-    @OnClick({R.id.retures, R.id.me_order, R.id.me_discounts, R.id.me_gift, R.id.me_like, R.id.me_track, R.id.me_vip, R.id.me_site, R.id.me_safyty, R.id.me_service, R.id.me_help, R.id.me_idea, R.id.line5})
+    @OnClick({R.id.retures, R.id.me_order, R.id.me_discounts, R.id.me_gift, R.id.me_like, R.id.me_track, R.id.me_vip, R.id.me_site, R.id.me_safyty, R.id.me_service, R.id.me_help, R.id.me_idea, R.id.line5,R.id.tv_username, R.id.log_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //点击小箭头
             case R.id.retures:
-                String token = SpUtils.getInstance().getString("token");
-                if (!TextUtils.isEmpty(token)) {
-                    Intent intent1 = new Intent(getActivity(), PresonActivity.class);
-                    startActivityForResult(intent1, 100);
-                } else {
-                    Intent intent2 = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent2);
-                }
-
+                presenter.Logout();
                 break;
             case R.id.me_order:
                 break;
@@ -147,29 +148,40 @@ public class MyFragment extends BaseFragment {
                 break;
             case R.id.line5:
                 break;
+            case R.id.tv_username:
+                String token = SpUtils.getInstance().getString("token");
+                if (!TextUtils.isEmpty(token)) {
+                    Intent intent1 = new Intent(getActivity(), PresonActivity.class);
+                    startActivityForResult(intent1, 100);
+                } else {
+                    Intent intent2 = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent2);
+                }
+                break;
+            case R.id.log_out:
+                break;
         }
     }
 
-    @OnClick(R.id.log_out)
-    public void onViewClicked() {
-        String token = SpUtils.getInstance().getString("token");
-        if(!TextUtils.isEmpty(token)){
-            openUserInfoDetail();
-        }else{
-            openLogin();
-        }
 
-    }
     //TODO 打开登录页面
     private void openLogin() {
         Intent intent = new Intent(mContext, LoginActivity.class);
         startActivityForResult(intent, LOGIN_ME);
     }
+
     //TODO 打开用户信息
     private void openUserInfoDetail() {
         ToastUtils.s(getActivity(), "此用户已登录");
+
     }
 
+    @Override
+    public void LogoutReturn(LogoutBean logoutBean) {
+        SPUtils.getInstance().remove("token");
+        ActivityCollectorUtil.finishAllActivity();
 
+        isLogin(false);
+    }
 }
 

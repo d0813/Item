@@ -107,13 +107,82 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
             <View
+                android:id="@+id/mV_category_assess"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1"
                 android:background="#ECE9E9"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_marginLeft="@dimen/dp_20"/>
             <!--评论内容-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mCl_category_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                android:visibility="gone">
 
+                <ImageView
+                    android:id="@+id/iv_category_info_comment_head_img"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:background="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_launcher"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_category_info_comment_head_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="null"
+                    app:layout_constraintLeft_toRightOf="@+id/iv_category_info_comment_head_img"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_category_info_comment_head_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:text="null"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_category_info_comment_head_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_30"
+                    android:text="nuldkjasfaoif发布IE部分看见啥DNF奥斯福呢就是否能爱哦翻就开始放你博FB那l"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_category_info_comment_head_img" />
+
+                <ImageView
+                    android:id="@+id/iv_category_info_comment_img"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_launcher"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_category_info_comment_head_desc" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/mV_category_comment"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_5"
+                android:background="@color/gray_word"
+                android:visibility="gone"/>
             <!--商品参数区域-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
